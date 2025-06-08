@@ -1,5 +1,4 @@
-// Исправьте ошибку с импортом компонентов
-function App() {
+export default function App() {
     return (
         <img
             src="AkliluLemma.jpg"
