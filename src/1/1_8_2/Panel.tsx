@@ -1,13 +1,22 @@
 import { useState } from 'react';
 
-export default function Panel({ children }: { children: React.ReactNode }) {
-    const [open, setOpen] = useState(true);
-    return (
-        <section className="panel">
-            <button onClick={() => setOpen(!open)}>
-                {open ? 'Collapse' : 'Expand'}
-            </button>
-            {open && children}
-        </section>
-    );
+type PanelProps = {
+  children: React.ReactNode;
+};
+
+export default function Panel({ children }: PanelProps) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <section className="panel">
+      <button onClick={handleToggle}>
+        {isOpen ? 'Collapse' : 'Expand'}
+      </button>
+      {isOpen && children}
+    </section>
+  );
 }
