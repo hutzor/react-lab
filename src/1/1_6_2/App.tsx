@@ -1,18 +1,13 @@
-// 1_6_2 Show the item importance with &&
-/*
-В этом примере каждый Item получает числовой параметр importance. Используйте оператор &&, чтобы отобразить "(Важность: X)" курсивом, но только для тех элементов, которые имеют ненулевую важность. В итоге ваш список предметов должен выглядеть следующим образом:
+type ItemProps = {
+  name: string;
+  importance: number;
+};
 
-- Космический скафандр (Важность: 9).
-- Шлем с золотым листом
-- Фотография Тама (Важность: 6)
-
-Не забудьте добавить пробел между двумя метками!
-*/
-
-function Item({ name, importance }: { name: string, importance: number }) {
+function Item({ name, importance }: ItemProps) {
   return (
     <li className="item">
       {name}
+      {importance > 0 && <i> (Важность: {importance})</i>}
     </li>
   );
 }
@@ -20,20 +15,11 @@ function Item({ name, importance }: { name: string, importance: number }) {
 export default function PackingList() {
   return (
     <section>
-      <h1>Sally Ride's Packing List</h1>
+      <h1>Sally Ride&apos;s Packing List</h1>
       <ul>
-        <Item 
-          importance={9} 
-          name="Space suit" 
-        />
-        <Item 
-          importance={0} 
-          name="Helmet with a golden leaf" 
-        />
-        <Item 
-          importance={6} 
-          name="Photo of Tam" 
-        />
+        <Item name="Space suit" importance={9} />
+        <Item name="Helmet with a golden leaf" importance={0} />
+        <Item name="Photo of Tam" importance={6} />
       </ul>
     </section>
   );
