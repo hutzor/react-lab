@@ -1,35 +1,32 @@
-// 3_3_1 Synced inputs 
-/*
-  Эти два входа являются независимыми. Сделайте их синхронизированными: редактирование одного входа должно обновить другой вход с тем же текстом, и наоборот.
-*/
-
 import { useState } from 'react';
 
 export default function SyncedInputs() {
+  const [value, setValue] = useState('');
+
   return (
     <>
-      <Input label="First input" />
-      <Input label="Second input" />
+      <Input label="First input" value={value} onChange={setValue} />
+      <Input label="Second input" value={value} onChange={setValue} />
     </>
   );
 }
 
-function Input({ label }: { label: string }) {
-  const [text, setText] = useState('');
-
-  function handleChange(e) {
-    setText(e.target.value);
-  }
-
+function Input({
+  label,
+  value,
+  onChange
+}: {
+  label: string;
+  value: string;
+  onChange: (newValue: string) => void;
+}) {
   return (
     <label>
-      {label}
-      {' '}
+      {label}{' '}
       <input
-        value={text}
-        onChange={handleChange}
+        value={value}
+        onChange={e => onChange(e.target.value)}
       />
     </label>
   );
 }
-
