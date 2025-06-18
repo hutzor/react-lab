@@ -1,30 +1,37 @@
-import { Contact } from "./App";
-import { Action } from "./messengerReducer";
+import { Contact } from './App';
+import { Action } from './messengerReducer';
 
-export default function ContactList(
-    {
-        contacts, selectedId, dispatch
-    }:
-        {
-            contacts: Contact[],
-            selectedId: number,
-            dispatch: (action: Action) => void
-        }
-) {
-    return (
-        <section className="contact-list">
-            <ul>
-                {contacts.map((contact) => (
-                    <li key={contact.id}>
-                        <button
-                            onClick={() => {
-                                // TODO: dispatch changed_selection
-                            }}>
-                            {selectedId === contact.id ? <b>{contact.name}</b> : contact.name}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </section>
-    );
+interface ContactListProps {
+  contacts: Contact[];
+  selectedId: number;
+  dispatch: (action: Action) => void;
+}
+
+export default function ContactList({
+  contacts,
+  selectedId,
+  dispatch
+}: ContactListProps) {
+  function handleSelect(id: number) {
+    dispatch({
+      type: 'changed_selection',
+      contactId: id
+    });
+  }
+
+  return (
+    <section className="contact-list">
+      <ul>
+        {contacts.map(contact => (
+          <li key={contact.id}>
+            <button onClick={() => handleSelect(contact.id)}>
+              {selectedId === contact.id
+                ? <b>{contact.name}</b>
+                : contact.name}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }

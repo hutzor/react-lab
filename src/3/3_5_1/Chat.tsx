@@ -1,29 +1,35 @@
-import { useState } from 'react';
 import { Action } from './messengerReducer';
 import { Contact } from './App';
 
-export default function Chat(
-    {
-        contact, message, dispatch
-    }:
-    {
-        contact: Contact,
-        message: string,
-        dispatch: (action: Action) => void
-    }
-) {
+interface ChatProps {
+  contact: Contact;
+  message: string;
+  dispatch: (action: Action) => void;
+}
+
+export default function Chat({
+  contact,
+  message,
+  dispatch
+}: ChatProps) {
+  function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    dispatch({
+      type: 'edited_message',
+      message: e.target.value
+    });
+  }
+
   return (
     <section className="chat">
       <textarea
         value={message}
-        placeholder={'Chat to ' + contact.name}
-        onChange={(e) => {
-          // TODO: dispatch edited_message
-          // (Read the input value from e.target.value)
-        }}
+        placeholder={`Chat to ${contact.name}`}
+        onChange={handleChange}
       />
       <br />
-      <button>Send to {contact.email}</button>
+      <button>
+        Send to {contact.email}
+      </button>
     </section>
   );
 }
