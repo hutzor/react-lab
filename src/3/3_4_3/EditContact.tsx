@@ -1,14 +1,29 @@
 import { useState } from 'react';
 import { Contact } from './App';
 
-export default function EditContact(
-    { initialData, onSave }:{
-      initialData: Contact;
-      onSave: (data: Contact) => void;
-    }
-) {
+export default function EditContact({
+  initialData,
+  onSave,
+}: {
+  initialData: Contact;
+  onSave: (data: Contact) => void;
+}) {
   const [name, setName] = useState(initialData.name);
   const [email, setEmail] = useState(initialData.email);
+
+  function handleSave() {
+    onSave({
+      id: initialData.id,
+      name,
+      email,
+    });
+  }
+
+  function handleReset() {
+    setName(initialData.name);
+    setEmail(initialData.email);
+  }
+
   return (
     <section>
       <label>
@@ -27,20 +42,10 @@ export default function EditContact(
           onChange={e => setEmail(e.target.value)}
         />
       </label>
-      <button onClick={() => {
-        const updatedData = {
-          id: initialData.id,
-          name: name,
-          email: email
-        };
-        onSave(updatedData);
-      }}>
+      <button onClick={handleSave}>
         Save
       </button>
-      <button onClick={() => {
-        setName(initialData.name);
-        setEmail(initialData.email);
-      }}>
+      <button onClick={handleReset}>
         Reset
       </button>
     </section>
