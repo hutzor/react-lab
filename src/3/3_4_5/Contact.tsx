@@ -1,18 +1,28 @@
-import { useState } from 'react';
 import { ContactType } from './App';
 
-export default function Contact({ contact }: { contact: ContactType }) {
-  const [expanded, setExpanded] = useState(false);
+export default function Contact({
+  contact,
+  showEmail,
+  onToggleEmail,
+}: {
+  contact: ContactType;
+  showEmail: boolean;
+  onToggleEmail: () => void;
+}) {
+  const { name, email } = contact;
+
   return (
     <>
-      <p><b>{contact.name}</b></p>
-      {expanded &&
-        <p><i>{contact.email}</i></p>
-      }
-      <button onClick={() => {
-        setExpanded(!expanded);
-      }}>
-        {expanded ? 'Hide' : 'Show'} email
+      <p>
+        <b>{name}</b>
+      </p>
+      {showEmail && (
+        <p>
+          <i>{email}</i>
+        </p>
+      )}
+      <button onClick={onToggleEmail}>
+        {showEmail ? 'Hide' : 'Show'} email
       </button>
     </>
   );
