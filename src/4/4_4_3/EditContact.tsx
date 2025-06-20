@@ -1,52 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ContactType } from './App';
 
-export default function EditContact(
-    { savedContact, onSave }:
-    { savedContact: ContactType, onSave: (updatedData: ContactType) => void }
-) {
+export default function EditContact({
+  savedContact,
+  onSave,
+}: {
+  savedContact: ContactType;
+  onSave: (updatedData: ContactType) => void;
+}) {
   const [name, setName] = useState(savedContact.name);
   const [email, setEmail] = useState(savedContact.email);
 
-  useEffect(() => {
+  const handleSaveClick = () => {
+    const updatedData = {
+      id: savedContact.id,
+      name,
+      email,
+    };
+    onSave(updatedData);
+  };
+
+  const handleResetClick = () => {
     setName(savedContact.name);
     setEmail(savedContact.email);
-  }, [savedContact]);
+  };
 
   return (
     <section>
       <label>
-        Name:{' '}
+        Name:
         <input
           type="text"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
         />
       </label>
       <label>
-        Email:{' '}
+        Email:
         <input
           type="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <button onClick={() => {
-        const updatedData = {
-          id: savedContact.id,
-          name: name,
-          email: email
-        };
-        onSave(updatedData);
-      }}>
-        Save
-      </button>
-      <button onClick={() => {
-        setName(savedContact.name);
-        setEmail(savedContact.email);
-      }}>
-        Reset
-      </button>
+      <button onClick={handleSaveClick}>Save</button>
+      <button onClick={handleResetClick}>Reset</button>
     </section>
   );
 }
